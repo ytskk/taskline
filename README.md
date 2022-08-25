@@ -1,6 +1,6 @@
 # Task Line
 
-Task line.
+Manage your tasks with a single line.
 
 ## Getting Started
 
