@@ -47,7 +47,6 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
             Text('Task Status'),
             const SizedBox(height: 16.0),
             CupertinoSlidingSegmentedControl<TaskStatus>(
-              backgroundColor: theme.colorScheme.surfaceVariant,
               children: {
                 for (final status in TaskStatus.values)
                   status: Text(

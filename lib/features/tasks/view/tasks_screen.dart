@@ -92,42 +92,44 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             builder: (BuildContext context) {
               final newTaskId = ref.read(taskListProvider.notifier).getUuid();
 
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                    left: 16,
-                    right: 16,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      TextFormField(
-                        textCapitalization: TextCapitalization.sentences,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        onFieldSubmitted: (String value) {
-                          if (value.isNotEmpty) {
-                            ref.read(taskListProvider.notifier).add(
-                                  value,
-                                  taskId: newTaskId,
-                                );
-                          }
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      Opacity(
-                        opacity: 0,
-                        child: Hero(
-                          tag: 'task-$newTaskId',
-                          child: Text(
-                            '$newTaskId',
-                            maxLines: 3,
+              return SafeArea(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                      left: 16,
+                      right: 16,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        TextFormField(
+                          textCapitalization: TextCapitalization.sentences,
+                          textAlign: TextAlign.center,
+                          autofocus: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          onFieldSubmitted: (String value) {
+                            if (value.isNotEmpty) {
+                              ref.read(taskListProvider.notifier).add(
+                                    value,
+                                    taskId: newTaskId,
+                                  );
+                            }
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        Opacity(
+                          opacity: 0,
+                          child: Hero(
+                            tag: 'task-$newTaskId',
+                            child: Text(
+                              '$newTaskId',
+                              maxLines: 3,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

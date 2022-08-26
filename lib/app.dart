@@ -28,8 +28,14 @@ class _AppState extends ConsumerState<App> {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme light = const ColorScheme.light();
-    ColorScheme dark = const ColorScheme.dark();
+    ColorScheme light = const ColorScheme.light(
+      primary: Colors.blue,
+      tertiary: Colors.green,
+    );
+    ColorScheme dark = const ColorScheme.dark(
+      primary: Colors.blueAccent,
+      tertiary: Colors.greenAccent,
+    );
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
