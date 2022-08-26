@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskline/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taskline/constants/constants.dart';
 import 'package:taskline/features/features.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>(

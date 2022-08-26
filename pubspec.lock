@@ -121,19 +121,12 @@ packages:
     source: hosted
     version: "2.2.3"
   dynamic_color:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dynamic_color
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
-  dynamic_colorscheme:
-    dependency: "direct main"
-    description:
-      name: dynamic_colorscheme
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
+    version: "1.4.0"
   fake_async:
     dependency: transitive
     description:

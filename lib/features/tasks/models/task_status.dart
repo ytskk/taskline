@@ -4,6 +4,7 @@ enum TaskStatus {
   done('Done');
 
   final String name;
+
   const TaskStatus(this.name);
 
   static TaskStatus fromName(String name) {

@@ -8,6 +8,7 @@ final themeModeProvider = ChangeNotifierProvider<ThemeModeNotifier>((ref) {
 
 class ThemeModeNotifier extends ChangeNotifier {
   ThemeModeNotifier(this.ref);
+
   Ref ref;
 
   void setThemeMode(ThemeMode themeMode) {
