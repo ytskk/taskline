@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
 import 'package:taskline/shared/shared.dart';
@@ -53,10 +55,8 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
   }
 
   /// It changes the status of the [task] to the next status.
-  void toggleTaskStatus(Task task) {
-    final updatedTask = task.copyWith(
-      status: TaskStatus.nextStatus(task.status),
-    );
+  void nextTaskStatus(Task task) {
+    final updatedTask = _changeTaskStatus(task);
     state = state.map((t) => t.id == updatedTask.id ? updatedTask : t).toList();
     _saveTasks();
   }
@@ -71,6 +71,22 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
     _saveTasks();
   }
 
+  /// Changes task status on [status] if provided, otherwise changes to the next status.
+  ///
+  /// If next status is [TaskStatus.done], updates completedAt property.
+  Task _changeTaskStatus(Task task, {TaskStatus? status}) {
+    final TaskStatus newStatus = status ?? TaskStatus.nextStatus(task.status);
+
+    final updatedTask = task.copyWith(
+      status: newStatus,
+      isCompleted: newStatus == TaskStatus.done,
+      completedAt: newStatus == TaskStatus.done ? DateTime.now() : null,
+    );
+    log('updated task: $updatedTask');
+
+    return updatedTask;
+  }
+
   /// Updates [name] of Task by [id].
   void edit({
     required String id,
@@ -80,8 +96,10 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
     state = state
         .map(
           (task) => task.id == id
-              ? task.copyWith(
-                  name: name,
+              ? _changeTaskStatus(
+                  task.copyWith(
+                    name: name,
+                  ),
                   status: status,
                 )
               : task,

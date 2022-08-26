@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,6 +31,13 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       appBar: AppBar(
         backgroundColor: colorScheme.surface,
         actions: [
+          IconButton(
+            onPressed: () {
+              ref.read(sharedUtilityProvider).getPreferencesString();
+            },
+            icon: Icon(Icons.code),
+            tooltip: 'Get string',
+          ),
           IconButton(
             onPressed: () {
               ref.read(taskListProvider.notifier).clear();

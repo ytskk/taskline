@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskline/constants/constants.dart';
 import 'package:taskline/features/features.dart';
+import 'package:taskline/shared/providers/providers.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>(
   (ref) => throw UnimplementedError(),
@@ -24,11 +25,23 @@ class SharedUtility {
 
   final SharedPreferences sharedPreferences;
 
+  void getPreferencesString() {
+    final String themeMode = _loadThemeModeString() ?? '';
+    final String tasks = _loadTasksString() ?? 'system';
+
+    final Map<String, String> preferencesMap = {
+      'themeMode': themeMode,
+      'tasks': tasks,
+    };
+
+    final String json = jsonEncode(preferencesMap);
+
+    log('json: $json');
+  }
+
   void saveTasks(List<Task> tasks) {
-    // log('saving tasks: $tasks', name: 'SharedUtility::saveTasks');
     if (tasks.isNotEmpty) {
       final String json = jsonEncode(tasks);
-      // print(json);
 
       sharedPreferences.setString(sharedPrefsTasksKey, json);
 
@@ -38,8 +51,14 @@ class SharedUtility {
     sharedPreferences.setString(sharedPrefsTasksKey, '');
   }
 
-  List<Task> loadTasks() {
+  String? _loadTasksString() {
     final json = sharedPreferences.getString(sharedPrefsTasksKey);
+
+    return json;
+  }
+
+  List<Task> loadTasks() {
+    final json = _loadTasksString();
 
     if (json == null || json.isEmpty) {
       return [];
@@ -49,7 +68,6 @@ class SharedUtility {
 
     final List<Task> tasks =
         jsonTasks.map((jsonTask) => Task.fromJson(jsonTask)).toList();
-    // log('loading tasks: $tasks', name: 'SharedUtility::loadTasks');
 
     return tasks;
   }
@@ -59,9 +77,14 @@ class SharedUtility {
     sharedPreferences.setString(sharedPrefsThemeModeKey, themeMode.name);
   }
 
-  ThemeMode loadThemeMode() {
+  String? _loadThemeModeString() {
     final themeModeValue = sharedPreferences.getString(sharedPrefsThemeModeKey);
-    log('loading theme from shared prefs: $themeModeValue');
+
+    return themeModeValue;
+  }
+
+  ThemeMode loadThemeMode() {
+    final themeModeValue = _loadThemeModeString();
 
     return ThemeMode.values.firstWhere(
       (themeMode) => themeMode.name == themeModeValue,

@@ -64,7 +64,7 @@ class _TaskItemState extends ConsumerState<TaskItem>
             'toggling task status ${widget.task.name} from ${widget.task.status.name} to ${TaskStatus.nextStatus(widget.task.status).name}',
             name: 'TaskItem::_TaskItemState::build::onPressed',
           );
-          ref.read(taskListProvider.notifier).toggleTaskStatus(widget.task);
+          ref.read(taskListProvider.notifier).nextTaskStatus(widget.task);
           // HapticFeedback.lightImpact();
         },
         onLongPress: () {
