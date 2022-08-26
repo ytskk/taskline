@@ -1,16 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
 
-class TaskList extends StatelessWidget {
+class TaskList extends ConsumerWidget {
   const TaskList({
     Key? key,
-    required this.tasks,
   }) : super(key: key);
 
-  final List<Task> tasks;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tasks = ref.watch(filteredProvider);
+
     if (tasks.isEmpty) {
       return TaskListEmpty();
     }

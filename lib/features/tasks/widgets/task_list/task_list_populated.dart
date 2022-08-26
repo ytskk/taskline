@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taskline/features/features.dart';
 
@@ -12,17 +13,19 @@ class TaskListPopulated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(
-        vertical: 64.0,
-        horizontal: 16.0,
+      padding: const EdgeInsets.fromLTRB(
+        16.0,
+        64.0,
+        16.0,
+        0.0,
       ),
-      // TODO: Broken hero animation. When first task is created, wrap width is 0.
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           for (int i = 0; i < tasks.length; i += 1) ...[
             TaskItem(
-              task: tasks.reversed.elementAt(i),
+              task: tasks.elementAt(i),
+              key: ValueKey(tasks.elementAt(i).id),
             ),
             if (i != tasks.length - 1)
               Container(
@@ -40,6 +43,5 @@ class TaskListPopulated extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

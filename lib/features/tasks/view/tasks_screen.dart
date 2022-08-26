@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,19 +13,35 @@ class TasksScreen extends ConsumerStatefulWidget {
 
 class _TasksScreenState extends ConsumerState<TasksScreen> {
   @override
-  void initState() {
-    super.initState();
-
-    ref.read(taskListProvider.notifier).loadTasks();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final List<Task> tasks = ref.watch(taskListProvider);
+    final isTasksListNotEmpty = ref.watch(taskListProvider).isNotEmpty;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
+      bottomNavigationBar: AnimatedSlide(
+        offset: Offset(0, isTasksListNotEmpty ? 0 : 1),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        child: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 24.0,
+            ),
+            child: CupertinoSlidingSegmentedControl(
+              children: {
+                for (final taskFilter in TaskFilter.values)
+                  taskFilter: Text(taskFilter.title),
+              },
+              groupValue: ref.watch(taskFilterProvider),
+              onValueChanged: (TaskFilter? value) {
+                ref.read(taskFilterProvider.notifier).update((state) => value!);
+              },
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: colorScheme.surface,
         actions: [
@@ -49,7 +63,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             onPressed: () {
               ref
                   .read(taskListProvider.notifier)
-                  .add('task ${tasks.length + 1}');
+                  .add('task ${ref.read(taskListProvider).length + 1}');
             },
             icon: Icon(Icons.add),
             tooltip: 'Add mock task',
@@ -67,6 +81,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             icon: Icon(Icons.settings),
           ),
         ],
+        // Hide segmented control if there are no tasks.
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -120,9 +135,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
           );
         },
         child: SizedBox.expand(
-          child: TaskList(
-            tasks: tasks,
-          ),
+          child: TaskList(),
         ),
       ),
     );

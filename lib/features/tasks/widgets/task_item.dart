@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
@@ -29,7 +28,7 @@ class _TaskItemState extends ConsumerState<TaskItem>
     log('new item: ${widget.task.name} was created');
     _scaleAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 150),
     );
 
     _scaleAnimation = Tween<double>(
@@ -47,6 +46,7 @@ class _TaskItemState extends ConsumerState<TaskItem>
 
   @override
   void dispose() {
+    // TODO: inverse animation on destroy.
     _scaleAnimationController.dispose();
     super.dispose();
   }
@@ -56,7 +56,6 @@ class _TaskItemState extends ConsumerState<TaskItem>
     final theme = Theme.of(context);
 
     return ScaleTransition(
-      key: ValueKey(widget.task.id),
       scale: _scaleAnimation,
       child: RawMaterialButton(
         onPressed: () {

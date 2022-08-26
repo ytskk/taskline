@@ -2,21 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/shared/providers/shared_utility_provider.dart';
 
-final themeModeProvider = ChangeNotifierProvider<ThemeModeNotifier>((ref) {
-  return ThemeModeNotifier(ref);
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  final sharedUtility = ref.watch(sharedUtilityProvider);
+
+  return ThemeModeNotifier(sharedUtility: sharedUtility);
 });
 
-class ThemeModeNotifier extends ChangeNotifier {
-  ThemeModeNotifier(this.ref);
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  ThemeModeNotifier({
+    required this.sharedUtility,
+  }) : super(ThemeMode.system);
 
-  Ref ref;
+  final SharedUtility sharedUtility;
 
-  void setThemeMode(ThemeMode themeMode) {
-    ref.watch(sharedUtilityProvider).setThemeMode(themeMode);
-    notifyListeners();
+  void _saveThemeMode() {
+    sharedUtility.saveThemeMode(state);
   }
 
-  ThemeMode loadThemeMode() {
-    return ref.watch(sharedUtilityProvider).loadThemeMode();
+  void setThemeMode(ThemeMode themeMode) {
+    state = themeMode;
+    _saveThemeMode();
+    // ref.watch(sharedUtilityProvider).setThemeMode(themeMode);
+    // notifyListeners();
+  }
+
+  void loadThemeMode() {
+    // return ref.watch(sharedUtilityProvider).loadThemeMode();
+    final data = sharedUtility.loadThemeMode();
+
+    state = data;
   }
 }
