@@ -88,12 +88,13 @@ class _TaskItemState extends ConsumerState<TaskItem>
         splashColor: Colors.transparent,
         // fillColor: Colors.blueAccent,
         child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
           style: theme.textTheme.bodyLarge!.copyWith(
             decoration: _matchDecorationByStatus(context, widget.task.status),
             color: _matchColorByStatus(context, widget.task.status),
             fontWeight: FontWeight.w500,
+            fontSize: 17,
           ),
           child: Text(
             widget.task.name,

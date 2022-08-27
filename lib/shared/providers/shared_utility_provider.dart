@@ -64,7 +64,6 @@ class SharedUtility {
 
   List<Task> loadTasks() {
     final json = _loadTasksString();
-    // final int clearPeriod = loadTasksClearPeriod();
 
     if (json == null || json.isEmpty) {
       return [];

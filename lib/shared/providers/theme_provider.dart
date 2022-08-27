@@ -22,13 +22,11 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
 
   void setThemeMode(ThemeMode themeMode) {
     state = themeMode;
+
     _saveThemeMode();
-    // ref.watch(sharedUtilityProvider).setThemeMode(themeMode);
-    // notifyListeners();
   }
 
   void loadThemeMode() {
-    // return ref.watch(sharedUtilityProvider).loadThemeMode();
     final data = sharedUtility.loadThemeMode();
 
     state = data;

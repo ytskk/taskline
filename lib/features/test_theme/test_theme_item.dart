@@ -23,7 +23,7 @@ class TestThemeItem extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              '#${color.value.toRadixString(16).substring(2).toUpperCase()}',
+              ColorX(color).toHexTriplet(),
               style: TextStyle(
                 color: color.computeLuminance() < 0.479
                     ? Colors.white
@@ -36,4 +36,9 @@ class TestThemeItem extends StatelessWidget {
       ],
     );
   }
+}
+
+extension ColorX on Color {
+  String toHexTriplet() =>
+      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 }

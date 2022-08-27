@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
-import 'package:taskline/shared/providers/tasks_clear_period_provider.dart';
 import 'package:taskline/shared/shared.dart';
 import 'package:uuid/uuid.dart';
 
 const _uuid = Uuid();
 
+/// Provider list of all saved tasks.
 final taskListProvider =
     StateNotifierProvider<TaskListNotifier, List<Task>>((ref) {
   final sharedUtil = ref.watch(sharedUtilityProvider);

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
-import 'package:taskline/shared/providers/tasks_clear_period_provider.dart';
 import 'package:taskline/shared/shared.dart';
 import 'package:taskline/utils/utils.dart';
 
@@ -18,9 +17,7 @@ class SettingsScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.surface,
         title: Text('Settings'),
       ),
       body: ListView(
@@ -43,9 +40,17 @@ class SettingsScreen extends ConsumerWidget {
                           ref.watch(themeModeProvider);
                       final bool isSelected = themeMode == selectedThemeMode;
 
-                      return Icon(
-                        isSelected ? Icons.check : null,
-                        color: isSelected ? theme.colorScheme.primary : null,
+                      return AnimatedCrossFade(
+                        alignment: Alignment.center,
+                        crossFadeState: isSelected
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 300),
+                        firstChild: Icon(
+                          Icons.check,
+                          color: theme.colorScheme.primary,
+                        ),
+                        secondChild: SizedBox.shrink(),
                       );
                     },
                   ),

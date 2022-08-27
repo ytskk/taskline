@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
-import 'package:taskline/shared/providers/filtered_tasks.dart';
 
+/// Filters tasks according to [TaskFilter] from [taskFilterProvider].
 final filteredProvider = Provider<List<Task>>(
   (ref) {
     final TaskFilter filter = ref.watch(taskFilterProvider);

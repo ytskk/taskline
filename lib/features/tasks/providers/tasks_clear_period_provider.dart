@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/shared/shared.dart';
 
+/// Control clear period of completed tasks.
 final tasksClearPeriodProvider =
     StateNotifierProvider<TasksClearPeriodNotifier, int>((ref) {
   final sharedUtil = ref.watch(sharedUtilityProvider);

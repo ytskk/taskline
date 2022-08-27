@@ -1,9 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
-// import 'package:dynamic_colorscheme/dynamic_colorscheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskline/shared/providers/tasks_clear_period_provider.dart';
-import 'package:taskline/shared/providers/theme_provider.dart';
+import 'package:taskline/shared/shared.dart';
 
 import 'features/features.dart';
 
@@ -39,29 +37,38 @@ class _AppState extends ConsumerState<App> {
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        final ColorScheme lightColorScheme = lightDynamic?.copyWith(
+              surface: lightDynamic.onInverseSurface,
+            ) ??
+            light;
+        final ColorScheme darkColorScheme = darkDynamic?.copyWith() ?? dark;
+
         return Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final ThemeMode themeMode = ref.watch(themeModeProvider);
 
             return MaterialApp(
-              theme: ThemeData(
-                colorScheme: lightDynamic?.copyWith(
-                      surface: lightDynamic.onInverseSurface,
-                    ) ??
-                    light,
-                useMaterial3: true,
-              ),
-              darkTheme: ThemeData(
-                colorScheme: darkDynamic ?? dark,
-                brightness: Brightness.dark,
-                useMaterial3: true,
-              ),
+              theme: _configureThemeData(lightColorScheme),
+              darkTheme: _configureThemeData(darkColorScheme),
               themeMode: themeMode,
+              debugShowCheckedModeBanner: false,
               home: const TasksScreen(),
             );
           },
         );
       },
+    );
+  }
+
+  ThemeData _configureThemeData(ColorScheme colorScheme) {
+    return ThemeData(
+      colorScheme: colorScheme,
+      useMaterial3: true,
+      scaffoldBackgroundColor: colorScheme.surface,
+      bottomAppBarColor: colorScheme.surfaceVariant,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colorScheme.surface,
+      ),
     );
   }
 }

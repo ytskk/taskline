@@ -18,7 +18,6 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     final isTasksListNotEmpty = ref.watch(taskListProvider).isNotEmpty;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       bottomNavigationBar: AnimatedSlide(
         offset: Offset(0, isTasksListNotEmpty ? 0 : 1),
         duration: const Duration(milliseconds: 200),
@@ -43,31 +42,31 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
         actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(sharedUtilityProvider).getPreferencesString();
-            },
-            icon: Icon(Icons.code),
-            tooltip: 'Get string',
-          ),
-          IconButton(
-            onPressed: () {
-              ref.read(taskListProvider.notifier).clear();
-            },
-            icon: Icon(Icons.clear_all),
-            tooltip: 'Clear all tasks',
-          ),
-          IconButton(
-            onPressed: () {
-              ref
-                  .read(taskListProvider.notifier)
-                  .add('task ${ref.read(taskListProvider).length + 1}');
-            },
-            icon: Icon(Icons.add),
-            tooltip: 'Add mock task',
-          ),
+          // // Debug buttons.
+          // IconButton(
+          //   onPressed: () {
+          //     ref.read(sharedUtilityProvider).getPreferencesString();
+          //   },
+          //   icon: Icon(Icons.code),
+          //   tooltip: 'Get string',
+          // ),
+          // IconButton(
+          //   onPressed: () {
+          //     ref.read(taskListProvider.notifier).clear();
+          //   },
+          //   icon: Icon(Icons.clear_all),
+          //   tooltip: 'Clear all tasks',
+          // ),
+          // IconButton(
+          //   onPressed: () {
+          //     ref
+          //         .read(taskListProvider.notifier)
+          //         .add('task ${ref.read(taskListProvider).length + 1}');
+          //   },
+          //   icon: Icon(Icons.add),
+          //   tooltip: 'Add mock task',
+          // ),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(

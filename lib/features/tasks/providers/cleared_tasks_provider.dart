@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
-import 'package:taskline/shared/providers/tasks_clear_period_provider.dart';
-import 'package:taskline/shared/shared.dart';
 
+/// Hides completed tasks.
 final clearedTasksProvider = Provider<List<Task>>(
   (ref) {
     final tasks = ref.watch(taskListProvider);

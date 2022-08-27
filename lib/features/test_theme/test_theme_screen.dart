@@ -122,7 +122,6 @@ class TestThemeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           SliverPadding(
