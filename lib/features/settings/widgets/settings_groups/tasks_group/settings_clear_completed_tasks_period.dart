@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
+import 'package:taskline/utils/utils.dart';
 
 class SettingsClearCompletedTasksPeriod extends ConsumerWidget {
   const SettingsClearCompletedTasksPeriod({Key? key}) : super(key: key);
@@ -30,6 +31,15 @@ class SettingsClearCompletedTasksPeriod extends ConsumerWidget {
       ),
     );
   }
+}
+
+String getClearPeriodText(Period period) {
+  final PluralMap? pluralMapFromString = PluralMap.fromString(period.name);
+  if (pluralMapFromString != null) {
+    return pluralize(period.value, pluralMapFromString, wrap: true);
+  }
+
+  return period.name;
 }
 
 class _SettingsClearPeriodBottomSheet extends StatelessWidget {
