@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
-import 'package:taskline/shared/shared.dart';
 
 class TaskItem extends ConsumerStatefulWidget {
   const TaskItem({
@@ -58,16 +58,15 @@ class _TaskItemState extends ConsumerState<TaskItem>
     return ScaleTransition(
       scale: _scaleAnimation,
       child: RawMaterialButton(
-        onPressed: () {
+        onPressed: () async {
           log(
             'toggling task status ${widget.task.name} from ${widget.task.status.name} to ${TaskStatus.nextStatus(widget.task.status).name}',
             name: 'TaskItem::_TaskItemState::build::onPressed',
           );
           ref.read(taskListProvider.notifier).nextTaskStatus(widget.task);
-          // HapticFeedback.lightImpact();
         },
-        onLongPress: () {
-          showDialog(
+        onLongPress: () async {
+          await showDialog(
             context: context,
             builder: (BuildContext context) {
               return TaskEdit(task: widget.task);

@@ -44,9 +44,14 @@ class TasksClearPeriodNotifier extends StateNotifier<Period> {
     Task task,
     Period clearPeriod,
   ) {
-    if (clearPeriod.inDays != -1 && task.completedAt != null) {
-      if (DateTime.now().difference(task.completedAt!).inDays >=
-          clearPeriod.inDays) {
+    final bool needsToCheck =
+        clearPeriod.inDays != -1 && task.completedAt != null;
+
+    if (needsToCheck) {
+      final bool isOld = DateTime.now().difference(task.completedAt!).inDays >=
+          clearPeriod.inDays;
+
+      if (isOld) {
         return false;
       }
     }

@@ -4,17 +4,21 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 
+/// Represents custom period of time.
 @immutable
 abstract class Period {
   /// Name to display.
   final String name;
 
   /// Represents value to display.
+  // Distinct comments from documentation.
   final int value;
 
   /// Coefficient to multiply value to get actual value.
   ///
   /// For day coefficient is 1, for week - 7, for month - 30.
+  ///
+  /// Example:
   ///
   /// 12 (value) weeks (coefficient 7) is 12*7 = 84 days.
   final int coefficient;

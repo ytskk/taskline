@@ -36,6 +36,7 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
       title: TextField(
         controller: nameController,
         autofocus: true,
+        textCapitalization: TextCapitalization.sentences,
       ),
       content: SingleChildScrollView(
         child: Column(
