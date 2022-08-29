@@ -73,7 +73,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
               SettingsTableRow(
                 onTap: () async {
-                  final int? period = await showModalBottomSheet<int>(
+                  final Period? period = await showModalBottomSheet<Period>(
                     context: context,
                     builder: (BuildContext context) {
                       return _SettingsClearPeriodBottomSheet();
@@ -87,12 +87,11 @@ class SettingsScreen extends ConsumerWidget {
                   }
                 },
                 title: Text('Clear completed tasks period'),
+                subtitle: Text(
+                  'Will delete completed tasks at next launch.',
+                ),
                 trailing: Text(
-                  pluralize(
-                    ref.watch(tasksClearPeriodProvider),
-                    DaysPluralMap(),
-                    wrap: true,
-                  ),
+                  getClearPeriodText(ref.watch(tasksClearPeriodProvider)),
                 ),
               ),
             ],
@@ -189,56 +188,33 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
+String getClearPeriodText(Period period) {
+  final PluralMap? pluralMapFromString = PluralMap.fromString(period.name);
+  if (pluralMapFromString != null) {
+    return pluralize(period.value, pluralMapFromString, wrap: true);
+  }
+
+  return period.name;
+}
+
 class _SettingsClearPeriodBottomSheet extends StatelessWidget {
   const _SettingsClearPeriodBottomSheet({
     Key? key,
   }) : super(key: key);
 
   final _clearPeriodListData = const [
-    {
-      'name': 'Never',
-      'value': -1,
-    },
-    {
-      'name': '0 days',
-      'value': 0,
-    },
-    {
-      'name': '1 day',
-      'value': 1,
-    },
-    {
-      'name': '2 days',
-      'value': 2,
-    },
-    {
-      'name': '3 days',
-      'value': 3,
-    },
-    {
-      'name': '4 days',
-      'value': 4,
-    },
-    {
-      'name': '5 days',
-      'value': 5,
-    },
-    {
-      'name': '6 days',
-      'value': 6,
-    },
-    {
-      'name': '1 week',
-      'value': 7,
-    },
-    {
-      'name': '2 weeks',
-      'value': 14,
-    },
-    {
-      'name': '1 month',
-      'value': 30,
-    },
+    const NeverPeriod(),
+    const ImmediatelyPeriod(),
+    const DaysPeriod(),
+    const DaysPeriod(2),
+    const DaysPeriod(3),
+    const DaysPeriod(4),
+    const DaysPeriod(5),
+    const DaysPeriod(6),
+    const WeekPeriod(),
+    const WeekPeriod(2),
+    const WeekPeriod(3),
+    const MonthPeriod(),
   ];
 
   @override
@@ -246,10 +222,13 @@ class _SettingsClearPeriodBottomSheet extends StatelessWidget {
     return ListView.builder(
       itemCount: _clearPeriodListData.length,
       itemBuilder: (BuildContext context, int index) {
+        final Period period = _clearPeriodListData.elementAt(index);
+        final String title = getClearPeriodText(period);
+
         return ListTile(
-          title: Text(_clearPeriodListData[index]['name'].toString()),
+          title: Text(title),
           onTap: () {
-            Navigator.of(context).pop(_clearPeriodListData[index]['value']);
+            Navigator.of(context).pop(period);
           },
         );
       },

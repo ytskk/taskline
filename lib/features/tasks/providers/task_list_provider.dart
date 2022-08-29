@@ -5,6 +5,7 @@ import 'package:taskline/features/features.dart';
 import 'package:taskline/shared/shared.dart';
 import 'package:uuid/uuid.dart';
 
+// const _uuid = Uuid();
 const _uuid = Uuid();
 
 /// Provider list of all saved tasks.
@@ -12,30 +13,42 @@ final taskListProvider =
     StateNotifierProvider<TaskListNotifier, List<Task>>((ref) {
   final sharedUtil = ref.watch(sharedUtilityProvider);
   final clearPeriod = ref.watch(tasksClearPeriodProvider);
-  // log('clear period: ${clearPeriod}');
 
   return TaskListNotifier(
-    [],
     sharedUtil,
+    clearPeriod: clearPeriod,
   );
 });
 
 class TaskListNotifier extends StateNotifier<List<Task>> {
-  TaskListNotifier(super.initialTasks, this.sharedUtility) {
-    log('creating task list notifier', name: 'TaskListNotifier');
-    loadTasks();
-  }
+  TaskListNotifier(
+    this.sharedUtility, {
+    required this.clearPeriod,
+  }) : super(sharedUtility.loadTasks());
 
   final SharedUtility sharedUtility;
+  final Period clearPeriod;
 
-  void _saveTasks() {
-    sharedUtility.saveTasks(state);
+  void _saveTasks([List<Task>? tasks]) {
+    final tasksToSave = tasks ?? state;
+    log('saving tasks: ${tasksToSave.length}');
+    sharedUtility.saveTasks(tasksToSave);
   }
 
   void loadTasks() {
-    final data = sharedUtility.loadTasks();
+    final List<Task> data = sharedUtility.loadTasks();
 
-    state = data;
+    final List<Task> filteredTasks = data
+        .where(
+          (task) => TasksClearPeriodNotifier.isTaskUnderClearPeriod(
+            task,
+            clearPeriod,
+          ),
+        )
+        .toList();
+    _saveTasks(filteredTasks);
+
+    state = filteredTasks;
   }
 
   /// Add new [Task] to the list.

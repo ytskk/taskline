@@ -14,17 +14,6 @@ class App extends ConsumerStatefulWidget {
 
 class _AppState extends ConsumerState<App> {
   @override
-  void initState() {
-    super.initState();
-    _init();
-  }
-
-  void _init() {
-    ref.read(themeModeProvider.notifier).loadThemeMode();
-    ref.read(tasksClearPeriodProvider.notifier).loadTasksClearPeriod();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ColorScheme light = const ColorScheme.light(
       primary: Colors.blue,
@@ -60,6 +49,12 @@ class _AppState extends ConsumerState<App> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
   ThemeData _configureThemeData(ColorScheme colorScheme) {
     return ThemeData(
       colorScheme: colorScheme,
@@ -70,5 +65,11 @@ class _AppState extends ConsumerState<App> {
         backgroundColor: colorScheme.surface,
       ),
     );
+  }
+
+  void _init() {
+    ref.read(themeModeProvider.notifier).loadThemeMode();
+    ref.read(tasksClearPeriodProvider.notifier).loadTasksClearPeriod();
+    ref.read(taskListProvider.notifier).loadTasks();
   }
 }

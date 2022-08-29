@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:taskline/utils/utils.dart';
 
 String pluralize(int value, PluralMap pluralMap, {bool wrap = false}) {
   final String plural = Intl.plural(
@@ -13,8 +15,9 @@ String pluralize(int value, PluralMap pluralMap, {bool wrap = false}) {
   return wrap ? '$value $plural' : plural;
 }
 
+@immutable
 abstract class PluralMap {
-  PluralMap({
+  const PluralMap({
     required this.other,
     this.one,
     this.two,
@@ -27,38 +30,55 @@ abstract class PluralMap {
   final String? two;
   final String? few;
   final String? many;
+
+  static PluralMap? fromString(String plural) {
+    switch (plural.toLowerCase()) {
+      case 'day':
+        return DayPluralMap();
+      case 'tasks':
+        return TasksPluralMap();
+      default:
+        return null;
+    }
+  }
 }
 
-class DaysPluralMap implements PluralMap {
-  @override
-  String? get one => 'day';
-
-  @override
-  String? get two => 'days';
-
-  @override
-  String? get few => 'days';
-
-  @override
-  String? get many => 'days';
-
-  @override
-  String get other => 'days';
+class DayPluralMap extends PluralMap {
+  const DayPluralMap({
+    super.one = 'day',
+    super.two = 'days',
+    super.few = 'days',
+    super.many = 'days',
+    super.other = 'days',
+  });
 }
 
-class TasksPluralMap implements PluralMap {
-  @override
-  String? get one => 'task';
+class WeekPluralMap extends PluralMap {
+  const WeekPluralMap({
+    super.one = 'week',
+    super.two = 'weeks',
+    super.few = 'weeks',
+    super.many = 'weeks',
+    super.other = 'weeks',
+  });
+}
 
-  @override
-  String? get two => 'tasks';
+class MonthPluralMap extends PluralMap {
+  const MonthPluralMap({
+    super.one = 'month',
+    super.two = 'months',
+    super.few = 'months',
+    super.many = 'months',
+    super.other = 'months',
+  });
+}
 
-  @override
-  String? get few => 'tasks';
-
-  @override
-  String? get many => 'tasks';
-
-  @override
-  String get other => 'tasks';
+class TasksPluralMap extends PluralMap {
+  const TasksPluralMap({
+    super.one = 'task',
+    super.two = 'tasks',
+    super.few = 'tasks',
+    super.many = 'tasks',
+    super.other = 'tasks',
+  });
 }

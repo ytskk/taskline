@@ -1,3 +1,4 @@
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     final isTasksListNotEmpty = ref.watch(taskListProvider).isNotEmpty;
 
     return Scaffold(
+      // Hide segmented control if there are no tasks.
       bottomNavigationBar: AnimatedSlide(
         offset: Offset(0, isTasksListNotEmpty ? 0 : 1),
         duration: const Duration(milliseconds: 200),
@@ -80,7 +82,6 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             icon: Icon(Icons.settings),
           ),
         ],
-        // Hide segmented control if there are no tasks.
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
