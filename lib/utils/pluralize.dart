@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:taskline/utils/utils.dart';
 
 String pluralize(int value, PluralMap pluralMap, {bool wrap = false}) {
   final String plural = Intl.plural(

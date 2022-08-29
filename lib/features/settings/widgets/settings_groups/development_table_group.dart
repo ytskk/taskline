@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:taskline/features/features.dart';
 
 class SettingsDevelopmentTableGroup extends StatelessWidget {

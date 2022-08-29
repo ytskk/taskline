@@ -18,6 +18,7 @@ class TapAndLongPressGestureRecognizer extends PrimaryPointerGestureRecognizer {
         );
 
   bool _longPressAccepted = false;
+
   // The buttons sent by `PointerDownEvent`. If a `PointerMoveEvent` comes with a
   // different set of buttons, the gesture is canceled.
   int? _initialButtons;

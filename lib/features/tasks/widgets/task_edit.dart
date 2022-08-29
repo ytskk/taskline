@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../shared/providers/providers.dart';
-import '../models/task.dart';
-import '../models/task_status.dart';
+import 'package:taskline/features/features.dart';
 
 class TaskEdit extends ConsumerStatefulWidget {
   const TaskEdit({
