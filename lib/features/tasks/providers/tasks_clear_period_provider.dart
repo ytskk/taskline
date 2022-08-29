@@ -23,6 +23,10 @@ class TasksClearPeriodNotifier extends StateNotifier<Period> {
   }
 
   void loadTasksClearPeriod() {
+    log(
+      'reading tasks clear period from shared preferences',
+      name: 'TasksClearPeriodNotifier::loadTasksClearPeriod',
+    );
     final clearTasksPeriod = sharedUtility.loadTasksClearPeriod();
 
     state = clearTasksPeriod;

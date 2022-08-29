@@ -36,6 +36,7 @@ abstract class Period {
 
   // from json
   factory Period.fromJson(Map<String, dynamic> json) {
+    log('acceptiong json: $json');
     final jsonMap = {
       'name': json['name'] as String,
       'value': json['value'] as int?,
@@ -65,7 +66,7 @@ abstract class Period {
         return MonthPeriod(value ?? 1);
       case 'never':
         return NeverPeriod();
-      case 'instantly':
+      case 'immediately':
         return ImmediatelyPeriod();
       default:
         throw ArgumentError('Unknown period: $name');
@@ -85,7 +86,7 @@ class NeverPeriod extends Period {
 class ImmediatelyPeriod extends Period {
   const ImmediatelyPeriod()
       : super(
-          name: 'Instantly',
+          name: 'Immediately',
           value: 0,
           coefficient: 1,
         );

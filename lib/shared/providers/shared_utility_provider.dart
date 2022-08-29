@@ -32,7 +32,7 @@ class SharedUtility {
     final Map<String, String> preferencesMap = {
       'themeMode': themeMode,
       'tasks': tasks,
-      'taskClearPeriod': tasksClearPeriod.toString(),
+      'taskClearPeriod': tasksClearPeriod,
     };
 
     final String json = jsonEncode(preferencesMap);
@@ -89,7 +89,7 @@ class SharedUtility {
   String _loadTasksClearPeriodString() {
     final json = sharedPreferences.getString(sharedPrefsTasksClearPeriodKey);
 
-    return json ?? '{"name": "never"}';
+    return json ?? '{"name": "Never", "value": -1}';
   }
 
   Period loadTasksClearPeriod() {

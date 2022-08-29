@@ -12,7 +12,7 @@ final themeModeProvider =
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   ThemeModeNotifier({
     required this.sharedUtility,
-  }) : super(ThemeMode.system);
+  }) : super(sharedUtility.loadThemeMode());
 
   final SharedUtility sharedUtility;
 

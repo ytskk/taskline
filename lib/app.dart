@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +37,7 @@ class _AppState extends ConsumerState<App> {
         return Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final ThemeMode themeMode = ref.watch(themeModeProvider);
+            log('themeMode: $themeMode');
 
             return MaterialApp(
               theme: _configureThemeData(lightColorScheme),
@@ -49,12 +52,6 @@ class _AppState extends ConsumerState<App> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _init();
-  }
-
   ThemeData _configureThemeData(ColorScheme colorScheme) {
     return ThemeData(
       colorScheme: colorScheme,
@@ -65,11 +62,5 @@ class _AppState extends ConsumerState<App> {
         backgroundColor: colorScheme.surface,
       ),
     );
-  }
-
-  void _init() {
-    ref.read(themeModeProvider.notifier).loadThemeMode();
-    ref.read(tasksClearPeriodProvider.notifier).loadTasksClearPeriod();
-    ref.read(taskListProvider.notifier).loadTasks();
   }
 }

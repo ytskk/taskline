@@ -1,2 +1,1 @@
-export 'settings_table.dart';
-export 'settings_table_row.dart';
+export 'settings_clear_completed_tasks_period.dart';

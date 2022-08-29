@@ -35,6 +35,10 @@ abstract class PluralMap {
     switch (plural.toLowerCase()) {
       case 'day':
         return DayPluralMap();
+      case 'week':
+        return WeekPluralMap();
+      case 'month':
+        return MonthPluralMap();
       case 'tasks':
         return TasksPluralMap();
       default:
