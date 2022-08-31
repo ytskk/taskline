@@ -46,7 +46,6 @@ class _TaskItemState extends ConsumerState<TaskItem>
 
   @override
   void dispose() {
-    // TODO: inverse animation on destroy.
     _scaleAnimationController.dispose();
     super.dispose();
   }

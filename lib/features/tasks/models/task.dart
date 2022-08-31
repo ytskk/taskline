@@ -24,7 +24,6 @@ class Task {
     DateTime? createdAt,
     DateTime? completedAt,
     // Crutch!!
-    //  TODO: refactor
     bool isCompleted = false,
   }) {
     assert(isCompleted ? completedAt != null : true);

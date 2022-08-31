@@ -1,5 +1,3 @@
-// TODO: periods. Day, week, month, Never, Instantly?.
-
 import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
@@ -40,7 +38,6 @@ abstract class Period {
 
   // from json
   factory Period.fromJson(Map<String, dynamic> json) {
-    log('acceptiong json: $json');
     final jsonMap = {
       'name': json['name'] as String,
       'value': json['value'] as int?,
