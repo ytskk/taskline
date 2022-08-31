@@ -121,32 +121,40 @@ class TestThemeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.all(16.0),
-            sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                childCount: colors.length,
-                (context, index) {
-                  final colorData = colors.elementAt(index);
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar.large(
+              title: Text('Generated Colors'),
+            ),
+          ];
+        },
+        body: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(16.0),
+              sliver: SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: colors.length,
+                  (context, index) {
+                    final colorData = colors.elementAt(index);
 
-                  return TestThemeItem(
-                    colorName: colorData['text'],
-                    color: colorData['color'],
-                  );
-                },
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 16.0,
-                mainAxisSpacing: 16.0,
-                mainAxisExtent: 140.0,
+                    return TestThemeItem(
+                      colorName: colorData['text'],
+                      color: colorData['color'],
+                    );
+                  },
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                  mainAxisExtent: 160.0,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

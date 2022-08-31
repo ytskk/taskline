@@ -88,7 +88,7 @@ class TaskListPopulated extends ConsumerWidget {
       text: '${task.name}',
       recognizer: TapAndLongPressGestureRecognizer()
         ..onLongPress = () {
-          showDialog(
+          showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
               return TaskEdit(task: task);

@@ -31,59 +31,108 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return AlertDialog(
-      backgroundColor: theme.colorScheme.surface,
-      title: TextField(
-        controller: nameController,
-        autofocus: true,
-        textCapitalization: TextCapitalization.sentences,
-      ),
-      content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Task Status'),
-            const SizedBox(height: 16.0),
-            CupertinoSlidingSegmentedControl<TaskStatus>(
-              children: {
-                for (final status in TaskStatus.values)
-                  status: Text(
-                    status.name,
-                  ),
-              },
-              groupValue: _status,
-              onValueChanged: (newValue) {
-                setState(() {
-                  _status = newValue!;
-                });
-              },
-            ),
-          ],
+    return SafeArea(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
         ),
-      ),
-      actions: [
-        TextButton(
-          style: TextButton.styleFrom(
-            primary: theme.colorScheme.error,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
           ),
-          onPressed: () {
-            ref.read(taskListProvider.notifier).remove(widget.task);
-            Navigator.of(context).pop();
-          },
-          child: Text('Delete'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceVariant,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: theme.colorScheme.error,
+                          ),
+                          onPressed: () {
+                            ref
+                                .read(taskListProvider.notifier)
+                                .remove(widget.task);
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Delete'),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: theme.colorScheme.primary,
+                          ),
+                          onPressed: () {
+                            ref.read(taskListProvider.notifier).edit(
+                                  id: widget.task.id,
+                                  name: nameController.text,
+                                  status: _status,
+                                );
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Update'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      controller: nameController,
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
+                    const SizedBox(height: 16.0),
+                    Text('Task Status'),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CupertinoSlidingSegmentedControl<TaskStatus>(
+                            children: {
+                              for (final status in TaskStatus.values)
+                                status: Text(
+                                  status.name,
+                                ),
+                            },
+                            groupValue: _status,
+                            onValueChanged: (newValue) {
+                              setState(() {
+                                _status = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        TextButton(
-          child: Text('Update'),
-          onPressed: () {
-            ref.read(taskListProvider.notifier).edit(
-                  id: widget.task.id,
-                  name: nameController.text,
-                  status: _status,
-                );
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
+      ),
     );
   }
 }

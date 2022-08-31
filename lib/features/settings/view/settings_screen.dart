@@ -10,16 +10,22 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-      ),
-      body: ListView(
-        children: [
-          const SettingsThemeTableGroup(),
-          const SettingsTasksTableGroup(),
-          const SettingsAboutTableGroup(),
-          const SettingsDevelopmentTableGroup(),
-        ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar.large(
+              title: Text('Settings'),
+            ),
+          ];
+        },
+        body: ListView(
+          children: [
+            const SettingsThemeTableGroup(),
+            const SettingsTasksTableGroup(),
+            const SettingsAboutTableGroup(),
+            const SettingsDevelopmentTableGroup(),
+          ],
+        ),
       ),
     );
   }
