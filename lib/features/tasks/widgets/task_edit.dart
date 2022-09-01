@@ -31,67 +31,63 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
         ),
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceVariant,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.onSurfaceVariant,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: theme.colorScheme.error,
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(taskListProvider.notifier)
+                              .remove(widget.task);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Delete'),
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Cancel'),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: theme.colorScheme.error,
-                          ),
-                          onPressed: () {
-                            ref
-                                .read(taskListProvider.notifier)
-                                .remove(widget.task);
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('Delete'),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: theme.colorScheme.primary,
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: theme.colorScheme.primary,
-                          ),
-                          onPressed: () {
-                            ref.read(taskListProvider.notifier).edit(
-                                  id: widget.task.id,
-                                  name: nameController.text,
-                                  status: _status,
-                                );
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('Update'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        onPressed: () {
+                          ref.read(taskListProvider.notifier).edit(
+                                id: widget.task.id,
+                                name: nameController.text,
+                                status: _status,
+                              );
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Update'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -103,28 +99,15 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
                       autofocus: true,
                       textCapitalization: TextCapitalization.sentences,
                     ),
-                    const SizedBox(height: 16.0),
-                    Text('Task Status'),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CupertinoSlidingSegmentedControl<TaskStatus>(
-                            children: {
-                              for (final status in TaskStatus.values)
-                                status: Text(
-                                  status.name,
-                                ),
-                            },
-                            groupValue: _status,
-                            onValueChanged: (newValue) {
-                              setState(() {
-                                _status = newValue!;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: 32.0),
+                    _TaskEditStatusToggle(
+                      values: TaskStatus.values.map((e) => e.name).toList(),
+                      statusIndex: _status.index,
+                      onPressed: (index) {
+                        setState(() {
+                          _status = TaskStatus.values.elementAt(index);
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -134,5 +117,48 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
         ),
       ),
     );
+  }
+}
+
+class _TaskEditStatusToggle extends StatelessWidget {
+  const _TaskEditStatusToggle({
+    Key? key,
+    required this.values,
+    required this.statusIndex,
+    this.onPressed,
+  }) : super(key: key);
+
+  final int statusIndex;
+  final List values;
+  final ValueChanged<int>? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ToggleButtons(
+      onPressed: onPressed,
+      // constraints: BoxConstraints(
+      //   /// 28 - magic number to fit all buttons
+      //   minWidth: (MediaQuery.of(context).size.width - 28.0) / 3,
+      //   maxWidth: 300.0,
+      //   minHeight: 44.0,
+      // ),
+      children: _generateToggleButtonList(values),
+      isSelected: _generateSelectedList(values, statusIndex),
+    );
+  }
+
+  List<bool> _generateSelectedList(List list, int index) {
+    return List.generate(list.length, (i) => i == index);
+  }
+
+  List<Widget> _generateToggleButtonList(List list) {
+    return List.generate(list.length, (index) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Text(
+          list.elementAt(index),
+        ),
+      );
+    });
   }
 }

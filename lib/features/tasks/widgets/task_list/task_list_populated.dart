@@ -90,6 +90,7 @@ class TaskListPopulated extends ConsumerWidget {
         ..onLongPress = () {
           showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
             builder: (BuildContext context) {
               return TaskEdit(task: task);
             },
