@@ -20,9 +20,11 @@ class TasksFilter extends ConsumerWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12.0,
-          vertical: 12.0,
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          right: 16.0,
+          bottom: 44.0,
+          top: 8.0,
         ),
         child: Row(
           children: [
