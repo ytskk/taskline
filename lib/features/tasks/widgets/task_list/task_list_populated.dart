@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
@@ -13,42 +14,44 @@ class TaskListPopulated extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(
-        16.0,
-        64.0,
-        16.0,
-        0.0,
-      ),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            for (int index = 0; index < tasks.length; index++) ...[
-              _buildTaskTextSpan(
-                context,
-                ref,
-                tasks.elementAt(index),
-              ),
-              if (index != tasks.length - 1)
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Container(
-                      width: 2.0,
-                      height: 12.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurfaceVariant
-                            .withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(8.0),
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(
+          16.0,
+          64.0,
+          16.0,
+          0.0,
+        ),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              for (int index = 0; index < tasks.length; index++) ...[
+                _buildTaskTextSpan(
+                  context,
+                  ref,
+                  tasks.elementAt(index),
+                ),
+                if (index != tasks.length - 1)
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        width: 2.0,
+                        height: 12.0,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant
+                              .withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
                     ),
                   ),
-                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -60,7 +63,7 @@ class TaskListPopulated extends ConsumerWidget {
         return Theme.of(context).colorScheme.onBackground;
       case TaskStatus.inProgress:
         return Theme.of(context).colorScheme.primary;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return Theme.of(context).colorScheme.tertiary;
     }
   }
@@ -74,7 +77,7 @@ class TaskListPopulated extends ConsumerWidget {
         return null;
       case TaskStatus.inProgress:
         return null;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return TextDecoration.lineThrough;
     }
   }
@@ -84,25 +87,15 @@ class TaskListPopulated extends ConsumerWidget {
     WidgetRef ref,
     Task task,
   ) {
+    final theme = Theme.of(context);
+
     return TextSpan(
       text: '${task.name}',
-      recognizer: TapAndLongPressGestureRecognizer()
-        ..onLongPress = () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (BuildContext context) {
-              return TaskEdit(task: task);
-            },
-          );
-        }
-        ..onTap = () {
-          ref.read(taskListProvider.notifier).nextTaskStatus(task);
-        },
+      recognizer: _buildGestureRecognizer(context, ref, task),
       style: TextStyle(
         fontSize: 16.0,
         height: 2.0,
-        fontWeight: FontWeight.w500,
+        // fontWeight: FontWeight.w700,
         decoration: _matchDecorationByStatus(
           context,
           task.status,
@@ -113,5 +106,25 @@ class TaskListPopulated extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  GestureRecognizer _buildGestureRecognizer(
+    BuildContext context,
+    WidgetRef ref,
+    Task task,
+  ) {
+    return TapAndLongPressGestureRecognizer()
+      ..onLongPress = () async {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (BuildContext context) {
+            return TaskEdit(task: task);
+          },
+        );
+      }
+      ..onTap = () {
+        ref.read(taskListProvider.notifier).nextTaskStatus(task);
+      };
   }
 }

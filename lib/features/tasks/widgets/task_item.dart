@@ -108,7 +108,7 @@ class _TaskItemState extends ConsumerState<TaskItem>
         return Theme.of(context).colorScheme.onBackground;
       case TaskStatus.inProgress:
         return Theme.of(context).colorScheme.primary;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return Theme.of(context).colorScheme.tertiary;
     }
   }
@@ -122,7 +122,7 @@ class _TaskItemState extends ConsumerState<TaskItem>
         return null;
       case TaskStatus.inProgress:
         return null;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return TextDecoration.lineThrough;
     }
   }

@@ -1,7 +1,7 @@
 enum TaskStatus {
-  todo('TODO'),
+  todo('Todo'),
   inProgress('In progress'),
-  done('Done');
+  completed('Completed');
 
   final String name;
 
@@ -18,14 +18,14 @@ enum TaskStatus {
   ///
   /// Represents machine transitions.
   ///
-  /// Status to do -> In progress -> Done -> to do ...
+  /// Status to do -> In progress -> Completed -> to do ...
   static TaskStatus nextStatus(TaskStatus taskStatus) {
     switch (taskStatus) {
       case TaskStatus.todo:
         return TaskStatus.inProgress;
       case TaskStatus.inProgress:
-        return TaskStatus.done;
-      case TaskStatus.done:
+        return TaskStatus.completed;
+      case TaskStatus.completed:
         return TaskStatus.todo;
     }
   }

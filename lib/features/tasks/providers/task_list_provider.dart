@@ -93,14 +93,14 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
 
   /// Changes task status on [status] if provided, otherwise changes to the next status.
   ///
-  /// If next status is [TaskStatus.done], updates completedAt property.
+  /// If next status is [TaskStatus.completed], updates completedAt property.
   Task _changeTaskStatus(Task task, {TaskStatus? status}) {
     final TaskStatus newStatus = status ?? TaskStatus.nextStatus(task.status);
 
     final updatedTask = task.copyWith(
       status: newStatus,
-      isCompleted: newStatus == TaskStatus.done,
-      completedAt: newStatus == TaskStatus.done ? DateTime.now() : null,
+      isCompleted: newStatus == TaskStatus.completed,
+      completedAt: newStatus == TaskStatus.completed ? DateTime.now() : null,
     );
     log('updated task: $updatedTask');
 

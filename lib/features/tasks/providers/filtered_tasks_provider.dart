@@ -16,8 +16,14 @@ final filteredProvider = Provider<List<Task>>(
         return tasks
             .where((task) => task.status == TaskStatus.inProgress)
             .toList();
+      case TaskFilter.notCompeted:
+        return tasks
+            .where((task) => task.status != TaskStatus.completed)
+            .toList();
       case TaskFilter.completed:
-        return tasks.where((task) => task.status == TaskStatus.done).toList();
+        return tasks
+            .where((task) => task.status == TaskStatus.completed)
+            .toList();
     }
   },
 );

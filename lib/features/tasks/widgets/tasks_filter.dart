@@ -8,28 +8,26 @@ class TasksFilter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTasksListNotEmpty = ref.watch(taskListProvider).isNotEmpty;
+    final theme = Theme.of(context);
 
-    return AnimatedSlide(
-      offset: Offset(0, isTasksListNotEmpty ? 0 : 1),
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-      child: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 24.0,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: theme.colorScheme.onSurface.withOpacity(0.5),
+            width: 0.5,
           ),
-          child: CupertinoSlidingSegmentedControl(
-            children: {
-              for (final taskFilter in TaskFilter.values)
-                taskFilter: Text(taskFilter.title),
-            },
-            groupValue: ref.watch(taskFilterProvider),
-            onValueChanged: (TaskFilter? value) {
-              ref.read(taskFilterProvider.notifier).update((state) => value!);
-            },
-          ),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12.0,
+          vertical: 12.0,
+        ),
+        child: Row(
+          children: [
+            const TasksFilterDropdown(),
+          ],
         ),
       ),
     );

@@ -15,6 +15,10 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Hide segmented control if there are no tasks.
+      // persistentFooterAlignment: AlignmentDirectional.centerStart,
+      // persistentFooterButtons: [
+      //   const TasksFilter(),
+      // ],
       bottomNavigationBar: const TasksFilter(),
       appBar: AppBar(
         actions: [

@@ -97,6 +97,7 @@ class _TaskEditState extends ConsumerState<TaskEdit> {
                     TextField(
                       controller: nameController,
                       autofocus: true,
+                      maxLines: null,
                       textCapitalization: TextCapitalization.sentences,
                     ),
                     const SizedBox(height: 32.0),
@@ -135,6 +136,7 @@ class _TaskEditStatusToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
+      borderRadius: BorderRadius.circular(4.0),
       onPressed: onPressed,
       // constraints: BoxConstraints(
       //   /// 28 - magic number to fit all buttons
@@ -154,7 +156,7 @@ class _TaskEditStatusToggle extends StatelessWidget {
   List<Widget> _generateToggleButtonList(List list) {
     return List.generate(list.length, (index) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Text(
           list.elementAt(index),
         ),
