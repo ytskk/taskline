@@ -12,7 +12,7 @@ class SettingsDevelopmentTableGroup extends StatelessWidget {
         SettingsTableRow(
           title: Text('Colors'),
           subtitle: Text(
-            'List of Material 3 generated color palettes.',
+            'List of theme-based dynamic generated color palettes',
           ),
           onTap: () {
             Navigator.of(context).push(

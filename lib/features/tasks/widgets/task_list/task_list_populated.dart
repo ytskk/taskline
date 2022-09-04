@@ -87,8 +87,6 @@ class TaskListPopulated extends ConsumerWidget {
     WidgetRef ref,
     Task task,
   ) {
-    final theme = Theme.of(context);
-
     return TextSpan(
       text: '${task.name}',
       recognizer: _buildGestureRecognizer(context, ref, task),

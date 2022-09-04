@@ -24,7 +24,7 @@ class SettingsClearCompletedTasksPeriod extends ConsumerWidget {
       },
       title: Text('Clear completed tasks period'),
       subtitle: Text(
-        'Will delete completed tasks at next launch.',
+        'Will delete completed tasks at next launch',
       ),
       trailing: Text(
         getClearPeriodText(ref.watch(tasksClearPeriodProvider)),
@@ -43,23 +43,25 @@ String getClearPeriodText(Period period) {
 }
 
 class _SettingsClearPeriodBottomSheet extends StatelessWidget {
-  const _SettingsClearPeriodBottomSheet({
+  _SettingsClearPeriodBottomSheet({
     Key? key,
   }) : super(key: key);
 
-  final _clearPeriodListData = const [
-    const NeverPeriod(),
-    const ImmediatelyPeriod(),
-    const DaysPeriod(),
-    const DaysPeriod(2),
-    const DaysPeriod(3),
-    const DaysPeriod(4),
-    const DaysPeriod(5),
-    const DaysPeriod(6),
-    const WeekPeriod(),
-    const WeekPeriod(2),
-    const WeekPeriod(3),
-    const MonthPeriod(),
+  final _clearPeriodListData = [
+    Period.never(),
+    Period.immediately(),
+    Period.day(),
+    Period.day(1),
+    Period.day(2),
+    Period.day(3),
+    Period.day(4),
+    Period.day(5),
+    Period.day(6),
+    Period.week(),
+    Period.week(2),
+    Period.week(3),
+    Period.week(4),
+    Period.month(),
   ];
 
   @override

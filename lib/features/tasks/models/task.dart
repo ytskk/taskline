@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:taskline/features/features.dart';
 
 @immutable
@@ -61,7 +62,7 @@ class Task {
 
   @override
   String toString() =>
-      'Task { id: $id, name: $name, status: $status, createdAt: $createdAt, completedAt: $completedAt }';
+      'Task { id: ${id}, name: $name, status: $status, createdAt: $createdAt, completedAt: $completedAt }';
 
   @override
   bool operator ==(Object other) {

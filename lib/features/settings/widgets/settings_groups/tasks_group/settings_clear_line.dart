@@ -56,7 +56,7 @@ class _ClearLineTasksDialog extends ConsumerWidget {
       actions: [
         TextButton(
           style: TextButton.styleFrom(
-            primary: theme.colorScheme.error,
+            foregroundColor: theme.colorScheme.error,
           ),
           onPressed: () {
             ref.read(taskListProvider.notifier).clear();

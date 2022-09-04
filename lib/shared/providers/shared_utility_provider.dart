@@ -89,7 +89,7 @@ class SharedUtility {
   String _loadTasksClearPeriodString() {
     final json = sharedPreferences.getString(sharedPrefsTasksClearPeriodKey);
 
-    return json ?? '{"name": "Never", "value": -1}';
+    return json ?? '{"name": "Month", "value": 1}';
   }
 
   Period loadTasksClearPeriod() {

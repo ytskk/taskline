@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskline/features/features.dart';
+import 'package:taskline/shared/shared.dart';
 
 class TasksScreen extends ConsumerStatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -23,13 +24,13 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       appBar: AppBar(
         actions: [
           // // Debug buttons.
-          // IconButton(
-          //   onPressed: () {
-          //     ref.read(sharedUtilityProvider).getPreferencesString();
-          //   },
-          //   icon: Icon(Icons.code),
-          //   tooltip: 'Get string',
-          // ),
+          IconButton(
+            onPressed: () {
+              ref.read(sharedUtilityProvider).getPreferencesString();
+            },
+            icon: Icon(Icons.code),
+            tooltip: 'Get string',
+          ),
           // IconButton(
           //   onPressed: () {
           //     ref.read(taskListProvider.notifier).clear();
