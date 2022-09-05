@@ -30,7 +30,7 @@ class TaskListEmpty extends StatelessWidget {
                 height: 16.0,
               ),
               Text(
-                'Tap anywhere to create a new task.',
+                'Tap anywhere to create a new task. Hold task to edit.',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleLarge!.copyWith(
                   fontSize: 17,

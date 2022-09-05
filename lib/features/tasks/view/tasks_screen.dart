@@ -24,13 +24,13 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       appBar: AppBar(
         actions: [
           // // Debug buttons.
-          IconButton(
-            onPressed: () {
-              ref.read(sharedUtilityProvider).getPreferencesString();
-            },
-            icon: Icon(Icons.code),
-            tooltip: 'Get string',
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     ref.read(sharedUtilityProvider).getPreferencesString();
+          //   },
+          //   icon: Icon(Icons.code),
+          //   tooltip: 'Get string',
+          // ),
           // IconButton(
           //   onPressed: () {
           //     ref.read(taskListProvider.notifier).clear();
