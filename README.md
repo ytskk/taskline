@@ -18,10 +18,47 @@ To keep track of new features and ideas, here's a [Roadmap](https://github.com/u
 
 Theme adapts to your device theme. 
 
-Light Version 1            |  Dark Version 1
-:-------------------------:|:-------------------------:
-![Light Version 1](https://user-images.githubusercontent.com/57366771/187024427-8077d979-0ccd-4cd0-bcc4-0c4c14d06e4f.png)  |  ![Dark Version 1](https://user-images.githubusercontent.com/57366771/187024426-3a4daf28-500e-4379-b855-df1962a3ad2b.png)
 
-Light Version 2            |  Dark Version 2
+### Home screen
+
+Light        |  Dark
 :-------------------------:|:-------------------------:
-![Light Version 2](https://user-images.githubusercontent.com/57366771/187024425-f3f21ebf-1673-403d-b193-14da909d5a95.png)  |  ![Dark Version 2](https://user-images.githubusercontent.com/57366771/187024424-b18f0619-17e1-4175-a6a0-efe8b38b1ecf.png)
+![Home screen light](https://user-images.githubusercontent.com/57366771/188496615-3f869da4-77ff-4761-a8d8-9f63604a8723.png)  |  ![Home screen dark](https://user-images.githubusercontent.com/57366771/188496765-cb5ecb5a-4fee-4981-aa92-72ce60f4f5d1.png)
+
+
+### Task creation
+
+Light        |  Dark
+:-------------------------:|:-------------------------:
+![Task creation light](https://user-images.githubusercontent.com/57366771/188496813-d4a0c7b3-4c06-42b8-8861-981de87c273e.png)  |  ![Task creation dark](https://user-images.githubusercontent.com/57366771/188496827-1daa089e-03ad-4244-bcfa-824aa1438b57.png)
+
+
+### Home screen with tasks
+
+Light        |  Dark
+:-------------------------:|:-------------------------:
+![Home screen with tasks light](https://user-images.githubusercontent.com/57366771/188496922-75f10eb9-8d96-44bf-bb11-024dc48e1808.png)  |  ![Home screen with tasks dark](https://user-images.githubusercontent.com/57366771/188496932-28cf5a24-afb5-48df-a2fe-a4b7477a01db.png)
+
+
+### Filters
+
+Light        |  Dark
+:-------------------------:|:-------------------------:
+![Filters light](https://user-images.githubusercontent.com/57366771/188496989-a79430c8-ba58-4c9b-8847-a6cdf416770e.png)  |  ![Filters dark](https://user-images.githubusercontent.com/57366771/188497010-4029bd01-a28a-4c9e-9916-5eb41bb5ba27.png)
+
+
+
+### Task edit
+
+Light        |  Dark
+:-------------------------:|:-------------------------:
+![Task edit light](https://user-images.githubusercontent.com/57366771/188497218-19fca88c-cd7c-4f24-8379-54ad11f4a62c.png)  |  ![Task edit dark](https://user-images.githubusercontent.com/57366771/188497251-af8d9278-9b75-4008-9f02-758e419387fd.png)
+
+
+
+
+
+
+
+
+
